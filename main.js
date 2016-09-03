@@ -3,23 +3,22 @@ var Bot = require('telegram-api').default;
 var Message = require('telegram-api/types/Message');
 var File = require('telegram-api/types/File');
 var fs = require('fs');
+
+var DATA_KEY = '';
+var BOT_TOKEN = '';
+
 var text = '';
 var users = [];
 var prev_time = '';
 
 console.log('Starting...');
 
-function parseTime(rawTime) {
-  var i = rawTime.indexOf('T');
-  var j = rawTime.indexOf('+');
-  return
-}
 //options for psi request
 const psi_options = {
   method: 'GET',
   uri:'https://api.data.gov.sg/v1/environment/psi',
   headers: {
-    'api-key': 'PUT YOUR API KEY HERE'
+    'api-key': DATA_KEY
   }
 }
 //callback for psi request
@@ -43,7 +42,7 @@ const pm25_options = {
   method: 'GET',
   uri:'https://api.data.gov.sg/v1/environment/pm25',
   headers: {
-    'api-key': 'PUT YOUR API KEY HERE'
+    'api-key': DATA_KEY
   }
 }
 //callback for pm2.5 request
@@ -64,27 +63,27 @@ function pm25_callback(error, response, body) {
   }
 }
 
-request(psi_options, psi_callback);
+request(psi_options, psi_callback); //initial data grab
+
 //bot things
 var bot = new Bot({
-  token: 'PUT YOUR BOT TOKEN HERE'
+  token: BOT_TOKEN
 });
 bot.start();
 console.log('Bot started');
 
-bot.on('message', function(msg) {
-  var chatId = msg.chat.id;
-  bot.sendMessage(chatId, text);
+bot.get(, function(msg) {
+  bot.sendMessage(msg.chat.id, text);
   request(psi_options, psi_callback);
   var added = false;
   for(var i = 0; i < users.length; i++){
-    if (chatId == users[i]) {
+    if (msg.chat.id == users[i]) {
       added = true;
       break;
     }
   }
   if (!added) {
-    users[users.length] = chatId;
+    users[users.length] = msg.chat.id;
   }
   console.log(msg);
   console.log('Total number of users:' + users.length);
