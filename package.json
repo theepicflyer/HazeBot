@@ -1,0 +1,22 @@
+{
+  "name": "hazebot",
+  "version": "0.9.0",
+  "description": "Telegram bot reporting Singapore haze",
+  "main": "main.js",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "node-telegram-bot-api": "^0.23.3",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theepicflyer/HazeBot.git"
+  },
+  "author": "jiacheng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theepicflyer/HazeBot/issues"
+  },
+  "homepage": "http://telegram.me/HaaaazzzyBot"
+}
