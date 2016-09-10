@@ -1,11 +1,10 @@
 var request = require('request');
-var Bot = require('telegram-api').default;
-var Message = require('telegram-api/types/Message');
-var File = require('telegram-api/types/File');
-var fs = require('fs');
+require('dotenv').load();
+var TelegramBot = require('node-telegram-bot-api');
+console.log(process.env.DATA_KEY);
 
-var DATA_KEY = '';
-var BOT_TOKEN = '';
+const DATA_KEY = process.env.DATA_KEY;
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
 var text = '';
 var users = [];
@@ -66,15 +65,12 @@ function pm25_callback(error, response, body) {
 request(psi_options, psi_callback); //initial data grab
 
 //bot things
-var bot = new Bot({
-  token: BOT_TOKEN
-});
-bot.start();
+var bot = new TelegramBot(BOT_TOKEN, {polling: true});
+
 console.log('Bot started');
 
-bot.get(, function(msg) {
-  bot.sendMessage(msg.chat.id, text);
-  request(psi_options, psi_callback);
+bot.onText(/\/start/, function (msg, match){
+  bot.sendMessage(msg.chat.id, 'Hi! I\'m HazeBot, /update to get the latest data!');
   var added = false;
   for(var i = 0; i < users.length; i++){
     if (msg.chat.id == users[i]) {
@@ -88,4 +84,9 @@ bot.get(, function(msg) {
   console.log(msg);
   console.log('Total number of users:' + users.length);
   console.log('\n');
+});
+
+bot.onText(/\/update/, function(msg) {
+  request(psi_options, psi_callback);
+  bot.sendMessage(msg.chat.id, text);
 })
