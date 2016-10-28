@@ -8,7 +8,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 
 var text = '';
 var users = [];
-var thing = {id:"", name:"", alert:""};
+var thing = {id:"", name:"", alert:""}; //0  for not subscribed, 1 for all the time, 
 var prev_time = '';
 
 console.log('Starting...');
@@ -84,23 +84,24 @@ bot.onText(/\/start/, function (msg, match){
 
 bot.onText(/\/update/, function(msg) {
   bot.sendMessage(msg.chat.id, text);
+  console.log(msg.chat.name)
 })
 
-bot.onText(/\/subscribe/, function (msg) {
-  var u = findUser(msg.chat.id);
-  if (u != -1) {
-    users[i].alert = true;
-    bot.sendMessage(msg.chat.id, "Subscribed");
-  }
-})
+// bot.onText(/\/subscribe/, function (msg) {
+//   var u = findUser(msg.chat.id);
+//   if (u != -1) {
+//     users[i].alert = true;
+//     bot.sendMessage(msg.chat.id, "Subscribed");
+//   }
+// })
 
-bot.onText(/\/unsubscribe/, function (msg) {
-  var u = findUser(msg.chat.id);
-  if (u != -1) {
-    users[i].alert = false;
-    bot.sendMessage(msg.chat.id, "Unsubscribed");
-  }
-})
+// bot.onText(/\/unsubscribe/, function (msg) {
+//   var u = findUser(msg.chat.id);
+//   if (u != -1) {
+//     users[i].alert = false;
+//     bot.sendMessage(msg.chat.id, "Unsubscribed");
+//   }
+// })
 
 function findUser(id) {
   var user = -1;
