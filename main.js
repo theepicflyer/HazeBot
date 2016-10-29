@@ -75,7 +75,6 @@ bot.onText(/\/start/, function (msg, match){
   bot.sendMessage(msg.chat.id, 'Hi! I\'m HazeBot, /update to get the latest data!');
   if (findUser(msg.chat.id)) {
     users[users.length].id = msg.chat.id;
-    users[users.length].name = msg.chat.name;
   }
   for (var i = 0; i < users.length; i++) {
     console.log(i + ':' + users[i].name);
@@ -84,7 +83,7 @@ bot.onText(/\/start/, function (msg, match){
 
 bot.onText(/\/update/, function(msg) {
   bot.sendMessage(msg.chat.id, text);
-  console.log(msg.chat.name)
+  console.log("message was sent");
 })
 
 // bot.onText(/\/subscribe/, function (msg) {
